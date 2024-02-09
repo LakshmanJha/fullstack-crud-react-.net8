@@ -4,6 +4,8 @@
 **/packages/
 **/bin/
 **/obj/
+**/app.db*
+
 
 
 # Archivos de Visual Studio Code

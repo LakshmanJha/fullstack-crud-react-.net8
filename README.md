@@ -19,3 +19,17 @@ dotnet new webapi --use-controllers -o API
 ```bash
 dotnet ef migrations add Initial
 ```
+
+## Update database:
+
+```bash
+dotnet ef database update
+```
+
+## Api run:
+
+### Dev mode:
+
+```bash
+dotnet watch run
+```
