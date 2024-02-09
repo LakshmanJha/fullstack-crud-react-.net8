@@ -1,5 +1,11 @@
+import { Products } from "./components";
+
 function App() {
-  return <main>hi</main>;
+  return (
+    <main>
+      <Products />
+    </main>
+  );
 }
 
 export default App;
