@@ -10,21 +10,38 @@ import {
   Flex,
   Heading,
   Button,
+  useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { useFetchProducts } from "../hooks";
 import { Product } from "./Product";
 import { Information } from "./Information";
 import { ProductSkeleton } from "./ProductSkeleton";
+import { ProductForm } from "./ProductForm";
+import { Product as ProductI } from "../types";
 
 export interface ProductsProps {}
 
 export const Products: React.FC<ProductsProps> = ({}) => {
-  const { products, isLoading, error } = useFetchProducts();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { products, isLoading, error, fetchProducts } = useFetchProducts();
+  const [selectProduct, setSelectProduct] = useState<ProductI | null>(null);
 
   if (isLoading) return <ProductSkeleton />;
 
   if (error) return <Information message={error} />;
+
+  const handleSelectProduct = (id: number) => {
+    const currentProduct =
+      products.find((product) => product.id === id) || null;
+    setSelectProduct(currentProduct);
+    onOpen();
+  };
+
+  const handleOnCLose = () => {
+    setSelectProduct(null);
+    onClose();
+  };
 
   return (
     <Box
@@ -42,6 +59,7 @@ export const Products: React.FC<ProductsProps> = ({}) => {
         <Button
           colorScheme="blue"
           leftIcon={<AddIcon />}
+          onClick={onOpen}
         >
           Add Product
         </Button>
@@ -63,6 +81,7 @@ export const Products: React.FC<ProductsProps> = ({}) => {
               <Product
                 key={product.id}
                 product={product}
+                onSelectProduct={handleSelectProduct}
               />
             ))}
           </Tbody>
@@ -70,6 +89,14 @@ export const Products: React.FC<ProductsProps> = ({}) => {
       </TableContainer>
       {!isLoading && !error && products.length === 0 && (
         <Information message={"No products available"} />
+      )}
+      {isOpen && (
+        <ProductForm
+          isOpen={isOpen}
+          onClose={handleOnCLose}
+          fetchProducts={fetchProducts}
+          updateProduct={selectProduct}
+        />
       )}
     </Box>
   );

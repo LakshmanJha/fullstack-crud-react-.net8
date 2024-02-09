@@ -5,9 +5,13 @@ import { DeleteIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
 
 export interface ProductProps {
   product: ProductI;
+  onSelectProduct: (id: number) => void;
 }
 
-export const Product: React.FC<ProductProps> = ({ product }) => {
+export const Product: React.FC<ProductProps> = ({
+  product,
+  onSelectProduct,
+}) => {
   return (
     <Tr>
       <Td>{product.id}</Td>
@@ -30,14 +34,18 @@ export const Product: React.FC<ProductProps> = ({ product }) => {
           <EditIcon
             boxSize={22}
             color={"blue"}
+            cursor={"pointer"}
+            onClick={() => onSelectProduct(product.id)}
           />
           <DeleteIcon
             boxSize={22}
             color={"red"}
+            cursor={"pointer"}
           />
           <ViewIcon
             boxSize={22}
             color={"green"}
+            cursor={"pointer"}
           />
         </HStack>
       </Td>
