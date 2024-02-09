@@ -1,4 +1,4 @@
-## Create de API:
+# Create API:
 
 ```bash
 dotnet new webapi --use-controllers -o API
@@ -32,4 +32,16 @@ dotnet ef database update
 
 ```bash
 dotnet watch run
+```
+
+# Create Client:
+
+```bash
+  npm create vite@latest client --template react-ts
+```
+
+## Adding packages:
+
+```bash
+ npm i @chakra-ui/react @emotion/react @emotion/styled framer-motion
 ```
