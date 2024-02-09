@@ -1,12 +1,12 @@
 ## Create de API:
 
-    ```bash
+    ``` bash
          dotnet new webapi --use-controllers -o API
     ```
 
 ## Adding Nuget packages:
 
-        ```bash
+        ``` bash
             dotnet add package Microsoft.EntityFrameworkCore.Sqlite
             dotnet add package Microsoft.EntityFrameworkCore.Design
             dotnet add package Microsoft.EntityFrameworkCore.SqlServer
