@@ -23,7 +23,7 @@ export const useAddProduct = () => {
         title: "Error adding product.",
         description: "There was an error adding the product.",
         status: "error",
-        duration: 1000,
+        duration: 5000,
         isClosable: true,
       });
       return null;

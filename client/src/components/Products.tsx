@@ -13,7 +13,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { useFetchProducts } from "../hooks";
+import { useDeleteProduct, useFetchProducts } from "../hooks";
 import { Product } from "./Product";
 import { Information } from "./Information";
 import { ProductSkeleton } from "./ProductSkeleton";
@@ -26,6 +26,7 @@ export const Products: React.FC<ProductsProps> = ({}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { products, isLoading, error, fetchProducts } = useFetchProducts();
   const [selectProduct, setSelectProduct] = useState<ProductI | null>(null);
+  const { onDelete } = useDeleteProduct();
 
   if (isLoading) return <ProductSkeleton />;
 
@@ -41,6 +42,11 @@ export const Products: React.FC<ProductsProps> = ({}) => {
   const handleOnCLose = () => {
     setSelectProduct(null);
     onClose();
+  };
+
+  const handleOnDelete = async (id: number) => {
+    await onDelete(id);
+    fetchProducts();
   };
 
   return (
@@ -82,6 +88,7 @@ export const Products: React.FC<ProductsProps> = ({}) => {
                 key={product.id}
                 product={product}
                 onSelectProduct={handleSelectProduct}
+                onDeleteProduct={handleOnDelete}
               />
             ))}
           </Tbody>

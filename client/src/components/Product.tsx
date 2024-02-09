@@ -1,16 +1,34 @@
 import React from "react";
 import { Product as ProductI } from "../types";
-import { Tr, Td, HStack, Avatar, Text, Badge } from "@chakra-ui/react";
+import {
+  Tr,
+  Td,
+  HStack,
+  Avatar,
+  Text,
+  Badge,
+  Popover,
+  Button,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+  PopoverFooter,
+} from "@chakra-ui/react";
 import { DeleteIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
 
 export interface ProductProps {
   product: ProductI;
   onSelectProduct: (id: number) => void;
+  onDeleteProduct: (id: number) => void;
 }
 
 export const Product: React.FC<ProductProps> = ({
   product,
   onSelectProduct,
+  onDeleteProduct,
 }) => {
   return (
     <Tr>
@@ -37,11 +55,32 @@ export const Product: React.FC<ProductProps> = ({
             cursor={"pointer"}
             onClick={() => onSelectProduct(product.id)}
           />
-          <DeleteIcon
-            boxSize={22}
-            color={"red"}
-            cursor={"pointer"}
-          />
+          <Popover>
+            <PopoverTrigger>
+              <DeleteIcon
+                boxSize={22}
+                color={"red"}
+                cursor={"pointer"}
+              />
+            </PopoverTrigger>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverHeader>Confirmation!</PopoverHeader>
+              <PopoverBody>Are you sure to delete this?</PopoverBody>
+              <PopoverFooter>
+                <Button
+                  colorScheme="red"
+                  size="sm"
+                  float={"right"}
+                  onClick={() => onDeleteProduct(product.id)}
+                >
+                  Delete
+                </Button>
+              </PopoverFooter>
+            </PopoverContent>
+          </Popover>
+
           <ViewIcon
             boxSize={22}
             color={"green"}

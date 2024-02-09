@@ -26,7 +26,7 @@ export const useUpdateProduct = () => {
         title: "Error updated product.",
         description: "There was an error updated the product.",
         status: "error",
-        duration: 1000,
+        duration: 5000,
         isClosable: true,
       });
       return null;
