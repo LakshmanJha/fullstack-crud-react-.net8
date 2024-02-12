@@ -23,12 +23,14 @@ export interface ProductProps {
   product: ProductI;
   onSelectProduct: (id: number) => void;
   onDeleteProduct: (id: number) => void;
+  onViewDetail: (id: number) => void;
 }
 
 export const Product: React.FC<ProductProps> = ({
   product,
   onSelectProduct,
   onDeleteProduct,
+  onViewDetail,
 }) => {
   return (
     <Tr>
@@ -85,6 +87,9 @@ export const Product: React.FC<ProductProps> = ({
             boxSize={22}
             color={"green"}
             cursor={"pointer"}
+            onClick={() => {
+              onViewDetail(product.id);
+            }}
           />
         </HStack>
       </Td>

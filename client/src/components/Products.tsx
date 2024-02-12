@@ -19,11 +19,17 @@ import { Information } from "./Information";
 import { ProductSkeleton } from "./ProductSkeleton";
 import { ProductForm } from "./ProductForm";
 import { Product as ProductI } from "../types";
+import { ViewDetails } from "./ViewDetails";
 
 export interface ProductsProps {}
 
 export const Products: React.FC<ProductsProps> = ({}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: viewDialogOpen,
+    onOpen: onDialogOpen,
+    onClose: onDialogClose,
+  } = useDisclosure();
   const { products, isLoading, error, fetchProducts } = useFetchProducts();
   const [selectProduct, setSelectProduct] = useState<ProductI | null>(null);
   const { onDelete } = useDeleteProduct();
@@ -33,8 +39,7 @@ export const Products: React.FC<ProductsProps> = ({}) => {
   if (error) return <Information message={error} />;
 
   const handleSelectProduct = (id: number) => {
-    const currentProduct =
-      products.find((product) => product.id === id) || null;
+    const currentProduct = handleFindProduct(id);
     setSelectProduct(currentProduct);
     onOpen();
   };
@@ -47,6 +52,16 @@ export const Products: React.FC<ProductsProps> = ({}) => {
   const handleOnDelete = async (id: number) => {
     await onDelete(id);
     fetchProducts();
+  };
+
+  const handleFindProduct = (id: number): ProductI | null => {
+    return products.find((product) => product.id === id) || null;
+  };
+
+  const handleViewDetail = (id: number) => {
+    const currentProduct = handleFindProduct(id);
+    setSelectProduct(currentProduct);
+    onDialogOpen();
   };
 
   return (
@@ -89,6 +104,7 @@ export const Products: React.FC<ProductsProps> = ({}) => {
                 product={product}
                 onSelectProduct={handleSelectProduct}
                 onDeleteProduct={handleOnDelete}
+                onViewDetail={handleViewDetail}
               />
             ))}
           </Tbody>
@@ -103,6 +119,13 @@ export const Products: React.FC<ProductsProps> = ({}) => {
           onClose={handleOnCLose}
           fetchProducts={fetchProducts}
           updateProduct={selectProduct}
+        />
+      )}
+      {viewDialogOpen && (
+        <ViewDetails
+          isOpen={viewDialogOpen}
+          onClose={onDialogClose}
+          product={selectProduct!}
         />
       )}
     </Box>
