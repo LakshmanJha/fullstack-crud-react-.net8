@@ -1,5 +1,4 @@
 import {
-  Button,
   Drawer,
   DrawerOverlay,
   DrawerContent,
@@ -7,7 +6,6 @@ import {
   DrawerHeader,
   DrawerBody,
   Text,
-  DrawerFooter,
   HStack,
   Avatar,
   Heading,
@@ -40,17 +38,25 @@ export const ViewDetails: React.FC<ViewDetailsProps> = ({
           <DrawerHeader>View Detail {product.name}</DrawerHeader>
 
           <DrawerBody>
-            <HStack>
+            <HStack alignItems={"center"}>
               <Avatar
                 name={product.name}
                 size={"sm"}
               />
-              <VStack alignItems={"self-start"}>
-                <Heading fontSize={16}>{product.name}</Heading>
-                <Heading fontSize={20}>${product.price}</Heading>
-                <Text>{product.description}</Text>
-              </VStack>
+              <Heading fontSize={16}>{product.name}</Heading>
             </HStack>
+            <VStack
+              alignItems={"center"}
+              marginTop={12}
+            >
+              <Text>{product.description}</Text>
+              <Heading
+                fontSize={20}
+                marginTop={5}
+              >
+                ${product.price}
+              </Heading>
+            </VStack>
           </DrawerBody>
 
           {/* <DrawerFooter>
